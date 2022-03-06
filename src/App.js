@@ -18,7 +18,7 @@ function App() {
           {/* url이 http://localhost:3000/ -> index라는 뜻 */}
           <Route path="/new" element={<New />} />
           <Route path="/edit" element={<Edit />} />
-          <Route path="/diary" element={<Diary />} />
+          <Route path="/diary/:id" element={<Diary />} />
         </Routes>
         <h2>Link component test</h2>
         <RouteTest />
