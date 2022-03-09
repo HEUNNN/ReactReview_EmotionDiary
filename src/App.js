@@ -7,6 +7,39 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useReducer, useRef } from "react";
 
+const dummyData = [
+  {
+    id: 1,
+    emotion: 1,
+    content: "오늘의 일기1",
+    date: 1646836779054,
+  },
+  {
+    id: 2,
+    emotion: 2,
+    content: "오늘의 일기2",
+    date: 1646836779055,
+  },
+  {
+    id: 3,
+    emotion: 3,
+    content: "오늘의 일기3",
+    date: 1646836779056,
+  },
+  {
+    id: 4,
+    emotion: 4,
+    content: "오늘의 일기4",
+    date: 1646836779057,
+  },
+  {
+    id: 5,
+    emotion: 5,
+    content: "오늘의 일기5",
+    date: 1646836779058,
+  },
+];
+
 const reducer = (state, action) => {
   let newState = [];
   switch (action.type) {
@@ -39,7 +72,7 @@ export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dummyData);
   const dataId = useRef(0);
   //CREATE
   const onCreate = (date, content, emotion) => {
