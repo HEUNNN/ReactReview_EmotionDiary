@@ -1,34 +1,32 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { DiaryStateContext } from "../App";
+import DiaryEditor from "../components/DiaryEditor";
 
 const Edit = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get("id");
-  const mode = searchParams.get("mode");
-  console.log(`id: ${id}, mode: ${mode}`);
-
   const navigate = useNavigate();
+  const { id } = useParams();
+  const diaryList = useContext(DiaryStateContext);
+  const [originData, setOriginData] = useState();
+  useEffect(() => {
+    if (diaryList.length >= 1) {
+      const targetDiary = diaryList.find(
+        (v) => parseInt(v.id) === parseInt(id)
+      );
+      if (targetDiary) {
+        setOriginData(targetDiary);
+      } else {
+        navigate("/", { replace: true });
+      }
+    }
+  }, [id, diaryList]);
 
   return (
-    <div className="Edit">
-      <h2>Edit</h2>
-      <p>이곳은 Edit 입니다.</p>
-      <button onClick={() => setSearchParams({ who: "hyeeun" })}>
-        Query String 바꾸기
-      </button>
-      <button
-        onClick={() => {
-          navigate("/home");
-        }}
-      >
-        Home으로 이동
-      </button>
-      <button
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        뒤로 이동
-      </button>
+    <div>
+      {originData && <DiaryEditor isEdit={true} originData={originData} />}
+      <div>
+        <img src={process.env.PUBLIC_URL + "/assets/emotion2.png"} />
+      </div>
     </div>
   );
 };

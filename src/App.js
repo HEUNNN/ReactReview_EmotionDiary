@@ -115,7 +115,7 @@ function App() {
               <Route path="/" element={<Home />} />
               {/* url이 http://localhost:3000/ -> index라는 뜻 */}
               <Route path="/new" element={<New />} />
-              <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/:id" element={<Edit />} />
               <Route path="/diary/:id" element={<Diary />} />
             </Routes>
           </div>

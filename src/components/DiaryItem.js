@@ -2,13 +2,14 @@ import { useNavigate } from "react-router-dom";
 import Mybutton from "./MyButton";
 
 const DiaryItem = ({ id, emotion, content, date }) => {
+  const strDate = new Date(parseInt(date)).toLocaleDateString();
   const navigate = useNavigate();
 
   const goDetail = () => {
-    navigate(`/diary${id}`);
+    navigate(`/diary/${id}`);
   };
   const goEdit = () => {
-    navigate(`/edit${id}`);
+    navigate(`/edit/${id}`);
   };
   return (
     <div className="DiaryItem">
@@ -19,18 +20,14 @@ const DiaryItem = ({ id, emotion, content, date }) => {
         ].join(" ")}
         onClick={goDetail}
       >
-        <img
-          src={process.env.PUBLIC_URL + `assets/emotion/emotion${emotion}.png`}
-        />
+        <img src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`} />
       </div>
       <div className="info_wrapper" onClick={goDetail}>
-        <div className="diary_date">
-          {new Date(parseInt(date)).toLocaleDateString()}
-        </div>
+        <div className="diary_date">{strDate}</div>
         <div className="diary_content_preview">{content.slice(0, 25)}</div>
       </div>
-      <div>
-        <Mybutton text={"수정하기"} onClick={goEdit} />
+      <div className="btn_wrapper">
+        <Mybutton text={"수정하기"} type={"default"} onClick={goEdit} />
       </div>
     </div>
   );

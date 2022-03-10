@@ -1,35 +1,38 @@
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
 import EmotionItem from "./EmotionItem";
 import Mybutton from "./MyButton";
 import Myheader from "./MyHeader";
 import { useContext } from "react";
 import { DiaryDispatchContext } from "../App";
 
+const env = process.env;
+env.PUBLIC_URL = env.PUBLIC_URL || "";
+
 const emotionList = [
   {
     emotion_id: 1,
-    emotion_img: process.env.PUBLIC_URL + `assets/emotion/emotion1.png`,
+    emotion_img: process.env.PUBLIC_URL + `assets/emotion1.png`,
     emotion_descript: "완전 좋음",
   },
   {
     emotion_id: 2,
-    emotion_img: process.env.PUBLIC_URL + `assets/emotion/emotion2.png`,
+    emotion_img: process.env.PUBLIC_URL + `assets/emotion2.png`,
     emotion_descript: "좋음",
   },
   {
     emotion_id: 3,
-    emotion_img: process.env.PUBLIC_URL + `assets/emotion/emotion3.png`,
+    emotion_img: process.env.PUBLIC_URL + `assets/emotion3.png`,
     emotion_descript: "그저그럼",
   },
   {
     emotion_id: 4,
-    emotion_img: process.env.PUBLIC_URL + `assets/emotion/emotion4.png`,
+    emotion_img: process.env.PUBLIC_URL + `assets/emotion4.png`,
     emotion_descript: "나쁨",
   },
   {
     emotion_id: 5,
-    emotion_img: process.env.PUBLIC_URL + `assets/emotion/emotion5.png`,
+    emotion_img: process.env.PUBLIC_URL + `assets/emotion5.png`,
     emotion_descript: "끔찍함",
   },
 ];
@@ -38,12 +41,15 @@ const getStringDate = (date) => {
   return date.toISOString().slice(0, 10);
 };
 
-const DiaryEditor = () => {
-  const navigate = useNavigate();
+const DiaryEditor = ({ isEdit, originData }) => {
   const [date, setDate] = useState(getStringDate(new Date()));
-  const [emotion, setEmotion] = useState(3);
+  const [emotion, setEmotion] = useState();
   const [content, setContent] = useState("");
+
   const { onCreate } = useContext(DiaryDispatchContext);
+
+  const navigate = useNavigate();
+
   const contentRef = useRef();
 
   const handleClickEmotion = (emotion) => {
@@ -57,6 +63,14 @@ const DiaryEditor = () => {
       contentRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      setDate(getStringDate(new Date(parseInt(originData.date))));
+      setEmotion(originData.emotion);
+      setContent(originData.content);
+    }
+  }, [isEdit, originData]);
 
   return (
     <div className="DiaryEditor">
@@ -91,7 +105,7 @@ const DiaryEditor = () => {
                 key={v.emotion_id}
                 {...v}
                 onClick={handleClickEmotion}
-                isSelected={v.emotion_id === emotion}
+                isSelected={parseInt(v.emotion_id) === parseInt(emotion)}
               />
             ))}
           </div>
