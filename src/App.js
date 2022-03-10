@@ -5,7 +5,7 @@ import Diary from "./Pages/Diary";
 // Routing 할 페이지
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 
 const dummyData = [
   {
@@ -74,15 +74,18 @@ export const DiaryDispatchContext = React.createContext();
 function App() {
   const [data, dispatch] = useReducer(reducer, dummyData);
   const dataId = useRef(0);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   //CREATE
-  const onCreate = (date, content, emotion) => {
+  const onCreate = (emotion, content, date) => {
     dispatch({
       type: "CREATE",
       data: {
         id: dataId.current,
-        date: new Date(date).getTime(),
-        content,
         emotion,
+        content,
+        date: new Date(date).getTime(),
       },
     });
     dataId.current += 1;
@@ -95,9 +98,9 @@ function App() {
       type: "EDIT",
       data: {
         id: targetId,
-        date: new Date(date).getTime(),
-        content,
         emotion,
+        content,
+        date: new Date(date).getTime(),
       },
     });
   };
@@ -105,7 +108,7 @@ function App() {
   //EDIT
   return (
     <DiaryStateContext.Provider value={data}>
-      <DiaryDispatchContext.Provider value={(onCreate, onRemove, onEdit)}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onRemove, onEdit }}>
         <BrowserRouter>
           <div className="App">
             <Routes>
