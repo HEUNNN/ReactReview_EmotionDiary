@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DiaryItem from "./DiaryItem";
 import Mybutton from "./MyButton";
@@ -14,7 +14,7 @@ const filterOptionList = [
   { selectValue: "bad", selectName: "안좋은 감정만" },
 ];
 
-const ControlMenu = ({ selectValue, onChange, optionList }) => {
+const ControlMenu = React.memo(({ selectValue, onChange, optionList }) => {
   return (
     //sort select 부분
     <select
@@ -29,7 +29,7 @@ const ControlMenu = ({ selectValue, onChange, optionList }) => {
       ))}
     </select>
   );
-};
+});
 
 const DiaryList = ({ diaryList }) => {
   //Home.js에서 diaryList 전달 받음

@@ -19,9 +19,9 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
   const contentRef = useRef();
 
-  const handleClickEmotion = (emotion) => {
+  const handleClickEmotion = useCallback((emotion) => {
     setEmotion(emotion);
-  };
+  }, []);
   const handleSubmit = () => {
     if (content.length < 1) {
       contentRef.current.focus();
