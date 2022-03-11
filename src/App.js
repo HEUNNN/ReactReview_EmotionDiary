@@ -72,7 +72,7 @@ export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData);
+  const [data, dispatch] = useReducer(reducer, []);
   const dataId = useRef(0);
   useEffect(() => {
     console.log(data);
@@ -93,7 +93,7 @@ function App() {
   const onRemove = (targetId) => {
     dispatch({ type: "REMOVE", targetId });
   };
-  const onEdit = (targetId, date, content, emotion) => {
+  const onEdit = (targetId, emotion, content, date) => {
     dispatch({
       type: "EDIT",
       data: {

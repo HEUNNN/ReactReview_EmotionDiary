@@ -8,6 +8,7 @@ const Edit = () => {
   const { id } = useParams();
   const diaryList = useContext(DiaryStateContext);
   const [originData, setOriginData] = useState();
+  console.log(originData);
   useEffect(() => {
     if (diaryList.length >= 1) {
       const targetDiary = diaryList.find(
@@ -24,9 +25,6 @@ const Edit = () => {
   return (
     <div className="Edit">
       {originData && <DiaryEditor isEdit={true} originData={originData} />}
-      <div>
-        <img src={process.env.PUBLIC_URL + "/assets/emotion2.png"} />
-      </div>
     </div>
   );
 };
