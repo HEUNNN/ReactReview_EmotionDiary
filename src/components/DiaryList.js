@@ -61,7 +61,7 @@ const DiaryList = ({ diaryList }) => {
     const copyList = JSON.parse(JSON.stringify(diaryList)); //깊은 복사
 
     const sortedList = filteredDiaryList(copyList).sort(compareObj);
-    console.log(sortedList);
+
     return sortedList;
   };
   return (

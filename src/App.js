@@ -72,11 +72,8 @@ export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dummyData);
   const dataId = useRef(0);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   //CREATE
   const onCreate = (emotion, content, date) => {
     dispatch({
