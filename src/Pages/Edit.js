@@ -22,7 +22,7 @@ const Edit = () => {
   }, [id, diaryList]);
 
   return (
-    <div>
+    <div className="Edit">
       {originData && <DiaryEditor isEdit={true} originData={originData} />}
       <div>
         <img src={process.env.PUBLIC_URL + "/assets/emotion2.png"} />
