@@ -65,6 +65,7 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
@@ -74,6 +75,20 @@ export const DiaryDispatchContext = React.createContext();
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
   const dataId = useRef(0);
+  useEffect(() => {
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      //local storage에 이미 저장되어 있던 데이터들을 감안하여 id를 부여해야하기 때문에 설정
+      //local storage에 있던 데이터들을 id 순으로 일단 정렬하여 가장 마지막 아이디 이후부터 id를 설정할 수 있도록 한다.
+      dataId.current = parseInt(diaryList[0].id) + 1;
+
+      //local storage에서 받아온 diaryList를 App 컴포넌트의 data state의 초기값으로 설정해야 한다.
+      dispatch({ type: "INIT", data: diaryList });
+    }
+  }, []);
   //CREATE
   const onCreate = (emotion, content, date) => {
     dispatch({
