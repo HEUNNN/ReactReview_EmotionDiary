@@ -10,7 +10,10 @@ const Diary = () => {
   const navigate = useNavigate();
   const diaryList = useContext(DiaryStateContext);
   const [originData, setOriginData] = useState();
-
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `Emotion Diary - ${id} diary page`;
+  }, []);
   useEffect(() => {
     if (diaryList.length >= 1) {
       //originDate를 찾는 과정 -> 공통으로 필요한 과정

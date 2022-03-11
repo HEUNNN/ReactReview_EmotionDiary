@@ -12,6 +12,11 @@ const Home = () => {
   const [data, setData] = useState([]); //년/월 조건에 따라 가공된 data를 관리하기 위해 사용할 data state
 
   useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `Emotion Diary - home page`;
+  }, []);
+
+  useEffect(() => {
     if (diaryList.length >= 1) {
       const firstDay = new Date(
         currDate.getFullYear(),
